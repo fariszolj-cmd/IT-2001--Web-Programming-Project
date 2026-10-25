@@ -1,12 +1,11 @@
-
-
 .env
 .env.*
 !.env.example
 config.local.php
 secrets.json
 *.log
-logs/
+backend/logs/*
+!backend/logs/.gitkeep
 vendor/
 node_modules/
 .DS_Store
