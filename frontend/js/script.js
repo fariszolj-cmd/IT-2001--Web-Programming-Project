@@ -1,102 +1,57 @@
-// some scripts
-
-// jquery ready start
-$(document).ready(function() {
-	// jQuery code
-
-
-    /* ///////////////////////////////////////
-
-    THESE FOLLOWING SCRIPTS ONLY FOR BASIC USAGE, 
-    For sliders, interactions and other
-
-    */ ///////////////////////////////////////
-    
-
-	//////////////////////// Prevent closing from click inside dropdown
-    $(document).on('click', '.dropdown-menu', function (e) {
-      e.stopPropagation();
-    });
-
-
-    $('.js-check :radio').change(function () {
-        var check_attr_name = $(this).attr('name');
-        if ($(this).is(':checked')) {
-            $('input[name='+ check_attr_name +']').closest('.js-check').removeClass('active');
-            $(this).closest('.js-check').addClass('active');
-           // item.find('.radio').find('span').text('Add');
-
-        } else {
-            item.removeClass('active');
-            // item.find('.radio').find('span').text('Unselect');
-        }
-    });
-
-
-    $('.js-check :checkbox').change(function () {
-        var check_attr_name = $(this).attr('name');
-        if ($(this).is(':checked')) {
-            $(this).closest('.js-check').addClass('active');
-           // item.find('.radio').find('span').text('Add');
-        } else {
-            $(this).closest('.js-check').removeClass('active');
-            // item.find('.radio').find('span').text('Unselect');
-        }
-    });
-
-
-
-	//////////////////////// Bootstrap tooltip
-	if($('[data-toggle="tooltip"]').length>0) {  // check if element exists
-		$('[data-toggle="tooltip"]').tooltip()
-	} // end if
-
-
-
-
-    
-}); 
-// jquery end
-
-
 $(document).ready(function () {
 
-    function showSection(id) {
-    $(".spa-section").hide();
+  // dropdown se ne zatvara klikom unutra
+  $(document).on("click", ".dropdown-menu", function (e) {
+    e.stopPropagation();
+  });
 
-    if (id === "home") {
-        $("#home").show();
-        $("#store").show();
-    } else if (id === "store") {
-        $("#store").show();
-    } else if (id === "about" || id === "contact") {
-        $("#" + id).show();
-    } else {
-        $("#home").show();
-        $("#store").show();
+  // radio (delegirano, radi i za naknadno učitane view-ove)
+  $(document).on("change", ".js-check :radio", function () {
+    var name = $(this).attr("name");
+    $("input[name='" + name + "']").closest(".js-check").removeClass("active");
+    if ($(this).is(":checked")) {
+      $(this).closest(".js-check").addClass("active");
     }
-}
+  });
 
-    $(".spa-link").on("click", function (event) {
-        event.preventDefault();
+  // checkbox
+  $(document).on("change", ".js-check :checkbox", function () {
+    $(this).closest(".js-check").toggleClass("active", $(this).is(":checked"));
+  });
 
-        const id = $(this).attr("href").substring(1);
+  // contact forma
+  $(document).on("submit", "#contact-form", function (e) {
+    e.preventDefault();
+    alert("Message submitted!");
+  });
 
-        if (!document.getElementById(id)) return;
+  // signin forma
+  $(document).on("submit", "#signin-form", function (e) {
+    e.preventDefault();
+    alert("Sign in submitted!");
+  });
 
-        history.pushState(null, "", "#" + id);
-        showSection(id);
-    });
+  // register forma
+  $(document).on("submit", "#register-form", function (e) {
+    e.preventDefault();
+    alert("Registration submitted!");
+  });
 
-    window.addEventListener("popstate", function () {
-        showSection(location.hash.substring(1) || "home");
-    });
+  // place order (checkout)
+  $(document).on("click", "#place-order", function () {
+    var form = document.getElementById("checkout-form");
+    if (form.reportValidity()) {
+      window.location.hash = "#order-complete";
+    }
+  });
 
-    showSection(location.hash.substring(1) || "home");
+  // tooltip se mora ponovo inicijalizirati nakon svakog view-a
+  function initTooltips() {
+    if ($('[data-toggle="tooltip"]').length > 0) {
+      $('[data-toggle="tooltip"]').tooltip();
+    }
+  }
 
-    $("#contact-form").on("submit", function (event) {
-        event.preventDefault();
-        alert("Message submitted!");
-    });
-
+  initTooltips();
+  document.addEventListener("viewLoaded", initTooltips);
 });
