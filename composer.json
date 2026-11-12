@@ -1,0 +1,9 @@
+{
+  "name": "fariscommerce/it-2001-project",
+  "description": "FarisCommerce coursework API",
+  "type": "project",
+  "require": {
+    "flightphp/core": "^3.15",
+    "php": "^8.1"
+  }
+}

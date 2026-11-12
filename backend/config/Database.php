@@ -2,7 +2,7 @@
 
 class Database
 {
-    public static function getConnection(): PDO
+    public static function getConfig(): array
     {
         $configPath = __DIR__ . '/config.local.php';
         if (!is_file($configPath)) {
@@ -12,6 +12,16 @@ class Database
         }
 
         $config = require $configPath;
+        if (!is_array($config)) {
+            throw new RuntimeException('The local configuration must return an array.');
+        }
+
+        return $config;
+    }
+
+    public static function getConnection(): PDO
+    {
+        $config = self::getConfig();
         $dsn = sprintf(
             'mysql:host=%s;dbname=%s;charset=%s',
             $config['host'],
