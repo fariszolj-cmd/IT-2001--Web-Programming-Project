@@ -1,0 +1,2211 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "FarisCommerce API",
+    "version": "1.0.0",
+    "description": "CRUD API for the FarisCommerce database plus external product and OLX shop-listing search."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000",
+      "description": "Local PHP development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Users"
+    },
+    {
+      "name": "Categories"
+    },
+    {
+      "name": "Products"
+    },
+    {
+      "name": "Carts"
+    },
+    {
+      "name": "Orders"
+    },
+    {
+      "name": "Payments"
+    },
+    {
+      "name": "Order items"
+    },
+    {
+      "name": "External search"
+    }
+  ],
+  "paths": {
+    "/api/users": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "List users",
+        "responses": {
+          "200": {
+            "description": "User list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a user",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserInput"
+        },
+        "responses": {
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/users/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get a user",
+        "responses": {
+          "200": {
+            "description": "User record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update supplied user fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update supplied user fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/UserPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete a user",
+        "responses": {
+          "204": {
+            "description": "User deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/categories": {
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "List categories",
+        "responses": {
+          "200": {
+            "description": "Category list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Category"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Create a category",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryInput"
+        },
+        "responses": {
+          "201": {
+            "description": "Category created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/categories/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Get a category",
+        "responses": {
+          "200": {
+            "description": "Category record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update supplied category fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Update supplied category fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CategoryPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated category",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Category"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categories"
+        ],
+        "summary": "Delete a category",
+        "responses": {
+          "204": {
+            "description": "Category deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/products": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "List products",
+        "responses": {
+          "200": {
+            "description": "Product list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Create a product",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProductInput"
+        },
+        "responses": {
+          "201": {
+            "description": "Product created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/products/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Get a product",
+        "responses": {
+          "200": {
+            "description": "Product record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update supplied product fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProductPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Update supplied product fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/ProductPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated product",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "summary": "Delete a product",
+        "responses": {
+          "204": {
+            "description": "Product deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/carts": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "List carts",
+        "responses": {
+          "200": {
+            "description": "Cart list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cart"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Create a cart",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CartInput"
+        },
+        "responses": {
+          "201": {
+            "description": "Cart created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/carts/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Get a cart",
+        "responses": {
+          "200": {
+            "description": "Cart record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Update supplied cart fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CartPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Update supplied cart fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/CartPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cart"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Carts"
+        ],
+        "summary": "Delete a cart",
+        "responses": {
+          "204": {
+            "description": "Cart deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/orders": {
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "List orders",
+        "responses": {
+          "200": {
+            "description": "Order list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Order"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Create an order",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrderInput"
+        },
+        "responses": {
+          "201": {
+            "description": "Order created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/orders/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Get an order",
+        "responses": {
+          "200": {
+            "description": "Order record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Update supplied order fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrderPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Update supplied order fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrderPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated order",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Orders"
+        ],
+        "summary": "Delete an order",
+        "responses": {
+          "204": {
+            "description": "Order deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/payments": {
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "List payments",
+        "responses": {
+          "200": {
+            "description": "Payment list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payment"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Create a payment record",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PaymentInput"
+        },
+        "responses": {
+          "201": {
+            "description": "Payment created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/payments/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Get a payment record",
+        "responses": {
+          "200": {
+            "description": "Payment record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Update supplied payment fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PaymentPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated payment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Update supplied payment fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/PaymentPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated payment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Payment"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Payments"
+        ],
+        "summary": "Delete a payment record",
+        "responses": {
+          "204": {
+            "description": "Payment deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/order_items": {
+      "get": {
+        "tags": [
+          "Order items"
+        ],
+        "summary": "List order items",
+        "responses": {
+          "200": {
+            "description": "Order item list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/OrderItem"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Order items"
+        ],
+        "summary": "Create an order item",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrderItemInput"
+        },
+        "responses": {
+          "201": {
+            "description": "Order item created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/order_items/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/Id"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Order items"
+        ],
+        "summary": "Get an order item",
+        "responses": {
+          "200": {
+            "description": "Order item record",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Order items"
+        ],
+        "summary": "Update supplied order item fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrderItemPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated order item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Order items"
+        ],
+        "summary": "Update supplied order item fields",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/OrderItemPatchInput"
+        },
+        "responses": {
+          "200": {
+            "description": "Updated order item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderItem"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Order items"
+        ],
+        "summary": "Delete an order item",
+        "responses": {
+          "204": {
+            "description": "Order item deleted"
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/api/external-search": {
+      "get": {
+        "tags": [
+          "External search"
+        ],
+        "summary": "Search an external product catalog or an OLX seller's active listings",
+        "description": "Default source is DummyJSON's public product search. Use source=olx with a configured OLX token and seller username to search that seller's active listings on the requested page. OLX's documented endpoint does not provide global keyword search, so filtering is local to the fetched page.",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "description": "Search term"
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "dummyjson",
+                "olx"
+              ],
+              "default": "dummyjson"
+            }
+          },
+          {
+            "name": "username",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Required when source=olx"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Matching external items",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExternalSearchResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "Id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "requestBodies": {
+      "UserInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserInput"
+            }
+          }
+        }
+      },
+      "UserPatchInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserPatchInput"
+            }
+          }
+        }
+      },
+      "CategoryInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CategoryInput"
+            }
+          }
+        }
+      },
+      "CategoryPatchInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CategoryPatchInput"
+            }
+          }
+        }
+      },
+      "ProductInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProductInput"
+            }
+          }
+        }
+      },
+      "ProductPatchInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ProductPatchInput"
+            }
+          }
+        }
+      },
+      "CartInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CartInput"
+            }
+          }
+        }
+      },
+      "CartPatchInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/CartPatchInput"
+            }
+          }
+        }
+      },
+      "OrderInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrderInput"
+            }
+          }
+        }
+      },
+      "OrderPatchInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrderPatchInput"
+            }
+          }
+        }
+      },
+      "PaymentInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaymentInput"
+            }
+          }
+        }
+      },
+      "PaymentPatchInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/PaymentPatchInput"
+            }
+          }
+        }
+      },
+      "OrderItemInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrderItemInput"
+            }
+          }
+        }
+      },
+      "OrderItemPatchInput": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrderItemPatchInput"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "Invalid request or business rule violation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Missing or invalid bearer token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Token is valid but does not permit this operation",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Resource or record not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Database or external service error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "UserInput": {
+        "type": "object",
+        "required": [
+          "name",
+          "email"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 190
+          }
+        }
+      },
+      "UserPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 190
+          }
+        }
+      },
+      "User": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "user_id"
+            ],
+            "properties": {
+              "user_id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "CategoryInput": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        }
+      },
+      "CategoryPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 120
+          }
+        }
+      },
+      "Category": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CategoryInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "category_id"
+            ],
+            "properties": {
+              "category_id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "ProductInput": {
+        "type": "object",
+        "required": [
+          "category_id",
+          "name",
+          "price"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "category_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 180
+          },
+          "price": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 99999999.99
+              },
+              {
+                "type": "string",
+                "pattern": "^[0-9]{1,8}(\\.[0-9]{1,2})?$"
+              }
+            ]
+          }
+        }
+      },
+      "ProductPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "category_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 180
+          },
+          "price": {
+            "oneOf": [
+              {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 99999999.99
+              },
+              {
+                "type": "string",
+                "pattern": "^[0-9]{1,8}(\\.[0-9]{1,2})?$"
+              }
+            ]
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "required": [
+          "product_id",
+          "category_id",
+          "name",
+          "price"
+        ],
+        "properties": {
+          "product_id": {
+            "type": "integer"
+          },
+          "category_id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string",
+            "pattern": "^[0-9]{1,8}(\\.[0-9]{1,2})?$"
+          }
+        }
+      },
+      "CartInput": {
+        "type": "object",
+        "required": [
+          "user_id"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "CartPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "Cart": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CartInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "cart_id"
+            ],
+            "properties": {
+              "cart_id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "OrderInput": {
+        "type": "object",
+        "required": [
+          "user_id",
+          "order_date"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "order_date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "OrderPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "order_date": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "Order": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrderInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "order_id"
+            ],
+            "properties": {
+              "order_id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "PaymentInput": {
+        "type": "object",
+        "required": [
+          "order_id",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "order_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "paid",
+              "failed",
+              "refunded"
+            ]
+          }
+        }
+      },
+      "PaymentPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "order_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "paid",
+              "failed",
+              "refunded"
+            ]
+          }
+        }
+      },
+      "Payment": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PaymentInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "payment_id"
+            ],
+            "properties": {
+              "payment_id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "OrderItemInput": {
+        "type": "object",
+        "required": [
+          "order_id",
+          "product_id",
+          "quantity"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "order_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "product_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "OrderItemPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "order_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "product_id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "quantity": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      },
+      "OrderItem": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/OrderItemInput"
+          },
+          {
+            "type": "object",
+            "required": [
+              "item_id"
+            ],
+            "properties": {
+              "item_id": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      },
+      "ExternalSearchResult": {
+        "type": "object",
+        "required": [
+          "source",
+          "query",
+          "page",
+          "total",
+          "items"
+        ],
+        "properties": {
+          "source": {
+            "type": "string",
+            "enum": [
+              "dummyjson",
+              "olx"
+            ]
+          },
+          "query": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "API token"
+      }
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": []
+    }
+  ]
+}
